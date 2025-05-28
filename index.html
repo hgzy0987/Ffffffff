@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Premium Loading Animation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+    /* বেসিক বডি সেটআপ */
+    body, html {
+      margin: 0; padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    /* কনটেইনার */
+    .loading-container {
+      text-align: center;
+      max-width: 320px;
+      width: 90vw;
+      user-select: none;
+    }
+
+    /* স্পিনার */
+    .spinner {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 30px;
+      border: 12px solid rgba(255,255,255,0.15);
+      border-top: 12px solid #00fff7;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      box-shadow:
+        0 0 10px #00fff7,
+        0 0 20px #00fff7,
+        0 0 30px #00fff7,
+        0 0 40px #00fff7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* মাঝখানে ছবি */
+    .spinner img {
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow:
+        0 0 8px 3px #00fff7,
+        0 0 15px 5px rgba(0, 255, 247, 0.5);
+      animation: pulseGlow 2.5s ease-in-out infinite;
+      background: #121212;
+      z-index: 10;
+    }
+
+    /* নিচের গ্রেডিয়েন্ট টেক্সট */
+    .loading-text {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(270deg, #00fff7, #ff00c8, #00fff7);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease infinite;
+      text-shadow:
+        0 0 8px rgba(0, 255, 247, 0.8),
+        0 0 20px rgba(255, 0, 200, 0.6);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    /* স্পিনিং অ্যানিমেশন */
+    @keyframes spin {
+      0% {transform: rotate(0deg);}
+      100% {transform: rotate(360deg);}
+    }
+
+    /* গ্রেডিয়েন্ট শিফট অ্যানিমেশন */
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* ছবি পলস গ্লো ইফেক্ট */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow:
+          0 0 8px 3px #00fff7,
+          0 0 15px 5px rgba(0, 255, 247, 0.5);
+      }
+      50% {
+        box-shadow:
+          0 0 15px 6px #00fff7,
+          0 0 30px 10px rgba(0, 255, 247, 0.7);
+      }
+    }
+
+    /* Responsive মোবাইল */
+    @media (max-width: 400px) {
+      .spinner {
+        width: 200px;
+        height: 200px;
+        border-width: 10px;
+      }
+      .spinner img {
+        width: 155px;
+        height: 155px;
+      }
+      .loading-text {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-container">
+    <div class="spinner">
+      <img src="https://i.postimg.cc/9Qr2mWjQ/20250528-125159.png" alt="Loading Image" />
+    </div>
+    <br>
+    <div class="loading-text"><h1>SIGNAL GPT V2.0</div></h1>
+  </div>
+
+  <script>
+    // ৫ সেকেন্ড পর login.html এ নিয়ে যাবে
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 5000);
+  </script>
+
+</body>
+</html>
