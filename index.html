@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="manifest" href="manifest.json">
   <title>Premium Loading Animation</title>
+  <button id="installBtn" style="display:none;">Install App</button>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
@@ -139,6 +141,29 @@
     setTimeout(() => {
       window.location.href = 'login.html';
     }, 5000);
+    if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('Service Worker Registered'));
+    }
+    let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'block';
+});
+
+document.getElementById('installBtn').addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install');
+      }
+      deferredPrompt = null;
+    });
+  }
+});
   </script>
 
 </body>
