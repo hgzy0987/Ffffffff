@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WIN GO 1 MINUTES SIGNAL</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      background: radial-gradient(circle at top left, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,0.05);
+      padding: 12px 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .header i {
+      font-size: 30px;
+      color: #00ffc3;
+      text-shadow: 0 0 10px #00ffc3;
+    }
+
+    .info-box, .signal-box, .emoji-box, .join-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .flex-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+
+    .signal-box div {
+      font-size: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .emojis {
+      display: flex;
+      justify-content: space-around;
+      font-size: 28px;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .emojis span {
+      transition: transform 0.2s ease;
+    }
+
+    .emojis span:hover {
+      transform: scale(1.3);
+    }
+
+    .floating-emoji {
+      position: fixed;
+      bottom: 60px;
+      animation: floatUp 2.5s ease-out forwards;
+      font-size: 26px;
+      z-index: 999;
+      left: 50%;
+    }
+
+    @keyframes floatUp {
+      0% {transform: translate(-50%, 0); opacity: 1;}
+      100% {transform: translate(-50%, -250px); opacity: 0;}
+    }
+
+    @media (max-width: 500px) {
+      .header {
+        font-size: 22px;
+        gap: 8px;
+      }
+      .signal-box div {
+        font-size: 16px;
+      }
+      .value {
+        font-size: 18px;
+      }
+      .emojis {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <i class="material-icons-outlined">signal_cellular_alt</i>
+    WIN GO 1 MINUTES SIGNAL
+  </div>
+
+  <div class="join-box flex-row">
+    <div class="label">👥 Join Users</div>
+    <div class="value" id="joinCount">0</div>
+  </div>
+
+  <div class="info-box flex-row">
+    <div>
+      <div class="label">📅 Period No</div>
+      <div class="value" id="periodNo">Loading...</div>
+    </div>
+    <div>
+      <div class="label">⏰ Live Time</div>
+      <div class="value" id="liveTime"></div>
+    </div>
+  </div>
+
+  <div class="signal-box">
+    <div id="signal1">Signal 1 loading...</div>
+    <div id="signal2">Signal 2 loading...</div>
+    <div id="signal3">Signal 3 loading...</div>
+    <div id="extraMessage">Loading extra message...</div>
+  </div>
+
+  <div class="emoji-box">
+    <div class="emojis">
+      <span onclick="sendEmoji('❤️')">❤️</span>
+      <span onclick="sendEmoji('🔥')">🔥</span>
+      <span onclick="sendEmoji('😲')">😲</span>
+      <span onclick="sendEmoji('💥')">💥</span>
+      <span onclick="sendEmoji('😎')">😎</span>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNA3h0fExL49Bth-G8nnw_PZ_laNn2tUc",
+      authDomain: "hgzy-signal-gpt.firebaseapp.com",
+      projectId: "hgzy-signal-gpt",
+      storageBucket: "hgzy-signal-gpt.appspot.com",
+      messagingSenderId: "898048478460",
+      appId: "1:898048478460:web:78091c7128f9193f27db79",
+      measurementId: "G-LQH91EEL96"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("liveTime").innerText = now.toLocaleTimeString("en-BD", {hour12: true});
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    function animateEmoji(emoji) {
+      const span = document.createElement('span');
+      span.className = 'floating-emoji';
+      span.textContent = emoji;
+      span.style.left = Math.random() * 80 + 10 + '%';
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), 2500);
+    }
+
+    function sendEmoji(emoji) {
+      animateEmoji(emoji);
+    }
+
+    let emojiInterval;
+    let joinInterval;
+    let joinCount = 0;
+
+    db.collection("panel").doc("main").onSnapshot((doc) => {
+      const data = doc.data();
+
+      document.getElementById("periodNo").innerText = data.period || "N/A";
+      document.getElementById("signal1").innerText = data.signal1 || "";
+      document.getElementById("signal2").innerText = data.signal2 || "";
+      document.getElementById("signal3").innerText = data.signal3 || "";
+      document.getElementById("extraMessage").innerText = data.extra || "";
+
+      if (data.startEmoji) {
+        if (!emojiInterval) {
+          emojiInterval = setInterval(() => {
+            const emojis = ['❤️','🔥','😲','💥','😎'];
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            animateEmoji(emoji);
+          }, 400);
+        }
+      } else {
+        clearInterval(emojiInterval);
+        emojiInterval = null;
+      }
+
+      if (data.joinStart) {
+        if (!joinInterval) {
+          joinCount = 0;
+          joinInterval = setInterval(() => {
+            joinCount += Math.floor(Math.random() * 10);
+            document.getElementById("joinCount").innerText = joinCount >= 1000 ? "1K+" : joinCount;
+          }, 1200);
+        }
+      } else {
+        clearInterval(joinInterval);
+        joinInterval = null;
+        joinCount = 0;
+        document.getElementById("joinCount").innerText = "0";
+      }
+    });
+  </script>
+</body>
+</html>
