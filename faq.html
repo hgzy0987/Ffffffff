@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ - GPT VERSION 2.0</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffd5;
+      margin-bottom: 30px;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .faq-item {
+      background-color: #2b2b2b;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+    }
+
+    .faq-question {
+      padding: 15px 20px;
+      cursor: pointer;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #1f1f1f;
+    }
+
+    .faq-question:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background-color: #333;
+      padding: 0 20px;
+    }
+
+    .faq-answer p {
+      padding: 15px 0;
+      color: #ccc;
+    }
+
+    .rotate {
+      transform: rotate(180deg);
+    }
+
+    .material-icons {
+      transition: transform 0.3s ease;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1><span class="material-icons">live_help</span> FAQ - GPT VERSION 2.0</h1>
+
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>1. GPT VERSION 2.0 কী?</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+      <div class="faq-answer">
+        <p>GPT VERSION 2.0 হলো একটি এআই বেসড প্ল্যাটফর্ম যেখানে HGZY বা DK WIN গেমের জন্য ৯৯% শিউর সিগন্যাল সরবরাহ করা হয়।</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>2. কিভাবে Signal Access পাবো?</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+      <div class="faq-answer">
+        <p>আপনাকে একটি পেইড প্যাকেজ সাবস্ক্রাইব করতে হবে (৩,৭,১৫,৩০ দিন)। তারপর Signal সিস্টেমে এক্সেস পাবেন।</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>3. পেমেন্ট কিভাবে করবো?</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+      <div class="faq-answer">
+        <p>পেমেন্ট বিকাশ, নগদ অথবা রকেটের মাধ্যমে করতে পারবেন। পেমেন্ট আইডি আমাদের WhatsApp বা Telegram বটে পাঠালেই এক্সেস দেওয়া হবে।</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>4. Signal Accuracy কত?</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+      <div class="faq-answer">
+        <p>আমাদের AI Engine ৯৯% একিউরেসি নিয়ে সিগন্যাল তৈরি করে। প্রথম বেট 100% উইন দেয়, এরপর প্রতি 10 বারের মধ্যে 8 বার জেতার সম্ভাবনা থাকে।</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>5. যদি সমস্যা হয়?</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+      <div class="faq-answer">
+        <p>আপনি আমাদের WhatsApp বা Telegram এ মেসেজ করতে পারেন। আমাদের সাপোর্ট টিম ২৪/৭ আপনার পাশে থাকবে।</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2025 GPT VERSION 2.0 | সমস্ত অধিকার সংরক্ষিত
+  </footer>
+
+  <script>
+    const questions = document.querySelectorAll('.faq-question');
+
+    questions.forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const icon = q.querySelector('.material-icons');
+
+        if (answer.style.maxHeight) {
+          answer.style.maxHeight = null;
+          icon.classList.remove('rotate');
+        } else {
+          document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
+          document.querySelectorAll('.material-icons').forEach(i => i.classList.remove('rotate'));
+
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          icon.classList.add('rotate');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

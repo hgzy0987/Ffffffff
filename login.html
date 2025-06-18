@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPT V2.0 Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      height: 100vh;
+      background: #000;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      user-select: none;
+      flex-direction: column;
+      padding: 15px;
+    }
+    .container {
+      background: #111;
+      border-radius: 20px;
+      padding: 40px 35px 45px;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 0 30px #00f0ff88;
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 0 40px #ff00d4aa;
+    }
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    .header img {
+      width: 350px;
+      height: 180px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 2px solid #00f0ff;
+      margin-bottom: 12px;
+    }
+    .header h1 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px #00f0ffaa;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 18px 22px;
+      border-radius: 14px;
+      border: none;
+      font-size: 1.1rem;
+      outline: none;
+      color: #000;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 15px #00f0ff55 inset;
+    }
+    button {
+      margin-top: 28px;
+      width: 100%;
+      padding: 16px 0;
+      font-size: 1.2rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00d4);
+      border: none;
+      border-radius: 16px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00f0ffaa;
+      text-transform: uppercase;
+    }
+    .message {
+      margin-top: 20px;
+      height: 32px;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .message.access-granted {
+      color: #4ade80;
+    }
+    .message.access-denied {
+      color: #f87171;
+    }
+    .get-access {
+      margin-top: 30px;
+      display: inline-block;
+      color: #00f0ff;
+      font-size: 1rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .get-access:hover {
+      color: #ff00d4;
+    }
+    .popup-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .popup-bg.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .popup {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 25px #00f0ff88;
+      color: #fff;
+    }
+    .popup-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .popup-btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(90deg, #00f0ff, #ff00d4);
+      color: #000;
+    }
+    .popup-btn.no-btn {
+      background: #dc2626;
+      color: #fff;
+    }
+    .material-icons-outlined {
+      vertical-align: middle;
+      font-size: 1.2rem;
+      margin-right: 6px;
+    }
+    #countdownBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: popIn 0.3s ease-in-out;
+    z-index: 9999;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0.5) translate(-50%, -50%);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1) translate(-50%, -50%);
+      opacity: 1;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://i.postimg.cc/X7Gvk1RL/computer-security-with-login-password-padlock-107791-16191.webp" alt="Lock Icon">
+      <h1><span class="material-icons-outlined">lock</span> GPT V2.0</h1>
+    </div>
+    <input type="password" id="password" placeholder="🔒 Access Password" />
+    <button onclick="checkPassword()"><span class="material-icons-outlined">login</span> LOGIN</button>
+    <div class="message" id="message"></div>
+    <div class="get-access" onclick="togglePopup()"><span class="material-icons-outlined">key</span> GET ACCESS PASSWORD</div>
+  </div>
+  <div class="popup-bg" id="popupBg">
+    <div class="popup">
+      <p><span class="material-icons-outlined">info</span> Access Password নিতে Yes অপশন এ ক্লিক করুন! এবং আপনার Access Key তৈরি করুন?</p>
+      <div class="popup-buttons">
+        <button class="popup-btn" onclick="goToAccess()">Yes</button>
+        <button class="popup-btn no-btn" onclick="togglePopup()">No</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const correctPassword = "12345";
+
+  function checkPassword() {
+    const passInput = document.getElementById("password");
+    const message = document.getElementById("message");
+
+    if (passInput.value === correctPassword) {
+      message.textContent = "Access Granted";
+      message.className = "message access-granted";
+
+      showCountdownAndRedirect();
+    } else {
+      message.textContent = "Access Denied";
+      message.className = "message access-denied";
+    }
+  }
+
+  function showCountdownAndRedirect() {
+    const countdownBox = document.createElement("div");
+    countdownBox.id = "countdownBox";
+    document.body.appendChild(countdownBox);
+
+    let timeLeft = 3;
+    countdownBox.textContent = timeLeft;
+
+    const countdownInterval = setInterval(() => {
+      timeLeft--;
+      if (timeLeft > 0) {
+        countdownBox.textContent = timeLeft;
+      } else {
+        clearInterval(countdownInterval);
+        countdownBox.remove();
+        window.location.href = "dashboard.html";
+      }
+    }, 1000);
+  }
+
+  function togglePopup() {
+    document.getElementById("popupBg").classList.toggle("active");
+  }
+
+  function goToAccess() {
+    window.location.href = "https://gpt-access.netlify.app";
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GPT V2.0 AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #000000, #111111);
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 10px #00ffc8;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .logo span {
+      font-size: 22px;
+      font-weight: bold;
+      background: linear-gradient(to right, #00ffc8, #00bfff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .menu-button {
+      background: #00ffc8;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .menu-items {
+      display: none;
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      background: #1f1f1f;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffc8;
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .menu-items a {
+      display: block;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+    }
+
+    .menu-items a:hover {
+      background: #00ffc8;
+      color: black;
+    }
+
+    .bottom-center-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 16px 28px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 0 20px #00ffcc80;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    /* Popup Modal */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 320px;
+      box-shadow: 0 0 20px #00ffc8;
+      animation: zoomIn 0.3s ease;
+    }
+
+    .popup-content h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #00ffc8;
+    }
+
+    .popup-content button {
+      margin: 10px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .yes-btn {
+      background: #00ffc8;
+      color: #000;
+    }
+
+    .no-btn {
+      background: #555;
+      color: #fff;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 600px) {
+      .menu-button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .bottom-center-button {
+        padding: 14px 24px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://i.postimg.cc/1trCPgmT/3d-rendering-biorobots-concept-23-2149524399.webp" alt="GPT AI" />
+      <span>GPT V2.0 AI</span>
+    </div>
+    <button class="menu-button" onclick="toggleMenu()">
+      <span class="material-icons">menu</span>
+      MENU
+    </button>
+    <div class="menu-items" id="menuItems">
+      <a href="faq.html"><span class="material-icons">help_outline</span> FAQ</a>
+<a href="package.html"><span class="material-icons">inventory_2</span> Package Upgrade</a>
+<a href="support.html"><span class="material-icons">support_agent</span> SUPPORT</a>
+<a href="profile.html"><span class="material-icons">person</span> Profile</a>
+<a href="cookies.html"><span class="material-icons">cookies</span>Cookies</a>
+    </div>
+  </header>
+
+  <!-- Support Bot Button (Bottom Center) -->
+  <button class="bottom-center-button" onclick="showPopup()">
+    <span class="material-icons">newspaper</span>
+    GPT UPDATE NEWS 📰 
+  </button>
+
+  <!-- Popup Modal -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h3>Gpt Version 2.0- Click on the Yes option for all types of updated news! .</h3>
+      <button class="yes-btn" onclick="redirectSupport()">YES</button>
+      <button class="no-btn" onclick="closePopup()">NO</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menuItems');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function showPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function redirectSupport() {
+      window.location.href = "news.html";
+    }
+  </script>
+
+</body>
+</html>
+<!-- ✅ Smart Lottie Animation Section (Mobile-Friendly, Isolated) -->
+<div class="gpt-ai-bot-section">
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <dotlottie-player src="https://lottie.host/22d14301-e770-47ba-8367-ba0839cea24d/cOZjNQhTFN.lottie" background="transparent" speed="1" style="width: 100%; max-width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+  <p class="gpt-bot-text">
+    <span class="highlight">HI Im GPT V2.0 AI BOT</span><br />
+    I analyzed the <strong>WIN GO 1 MINUTES</strong> game and tested <span class="highlight">100% correct signal</span>.<br />
+    <em>Mainly what will help you recover your loos.</em>
+  </p>
+</div>
+
+<!-- ✅ Scoped CSS Styling -->
+<style>
+  .gpt-ai-bot-section {
+    max-width: 100%;
+    padding: 20px;
+    background: #0f1117;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 164, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    text-align: center;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .gpt-bot-text {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .gpt-bot-text .highlight {
+    color: #00ffc8;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffc8aa;
+  }
+
+  @media (max-width: 480px) {
+    .gpt-bot-text {
+      font-size: 14px;
+    }
+  }
+</style>
+<!-- Google Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+<!-- VIP Signal Button Section -->
+<div class="vip-signal-button-wrapper">
+  <a href="vipsignal.html" class="vip-signal-button">
+    <span class="material-icons-outlined">signal_cellular_alt</span>
+    GO TO VIP SIGNAL PAGE
+  </a>
+</div>
+
+<!-- Scoped Premium Styling -->
+<style>
+  .vip-signal-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 15px;
+    background: transparent;
+    z-index: 1;
+    position: relative;
+  }
+
+  .vip-signal-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #00ffc8, #0078ff, #9b00ff);
+    background-size: 300% 300%;
+    border: none;
+    border-radius: 60px;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0, 255, 200, 0.35);
+    transition: all 0.4s ease-in-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: gradientPulse 5s ease infinite;
+  }
+
+  .vip-signal-button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 12px 35px rgba(0, 255, 200, 0.6);
+  }
+
+  .vip-signal-button .material-icons-outlined {
+    font-size: 26px;
+    color: #fff700;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.7);
+    animation: signalGlow 2s infinite alternate;
+  }
+
+  @keyframes gradientPulse {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes signalGlow {
+    from {
+      text-shadow: 0 0 5px #fff700, 0 0 10px #ff0;
+    }
+    to {
+      text-shadow: 0 0 12px #fff700, 0 0 18px #ff0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .vip-signal-button {
+      font-size: 16px;
+      padding: 14px 26px;
+    }
+
+    .vip-signal-button .material-icons-outlined {
+      font-size: 22px;
+    }
+  }
+</style>
